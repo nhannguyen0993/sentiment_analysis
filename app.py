@@ -103,6 +103,7 @@ if choice == 'Business Objective':
 
 
 if choice == 'Deploy Project':
+    st.title('Deploy Project')
     st.header('1. Data understanding')
     st.write('''
     - The data is provided in the file "Products_Shopee_comments.csv"
@@ -217,6 +218,7 @@ if choice == 'Deploy Project':
     ''')
 
 if choice == 'New Prediction':
+    st.title('New Prediction')
     lines = None
     type = st.selectbox("Select the data you'd like to predict:", options=("Input text", "Upload file *.csv","Upload file *.txt", ))
     if type == "Upload file *.csv":
@@ -289,7 +291,7 @@ if choice == 'New Prediction':
                 mime='text/csv;charset=UTF-8',
             )
 if choice == 'New Prediction using API':
-    st.header('Sentiment Analysis using MonkeyLearn API')
+    st.title('Sentiment Analysis using MonkeyLearn API')
     review = st.text_input(label='Input your feedback:')
     if st.button(label='Submit'):
         # Open the file in read mode
