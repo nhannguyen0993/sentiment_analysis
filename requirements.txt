@@ -9,3 +9,4 @@ regex
 demoji
 chardet
 streamlit_option_menu
+requests
