@@ -14,6 +14,7 @@ from PIL import Image
 
 import chardet
 import joblib
+import requests
 
 from processing_function import *
 
@@ -49,7 +50,7 @@ model = load_model()
 
 with st.sidebar:  
     choice = option_menu('Menu',
-                          ['Business Objective', 'Deploy Project', 'New Prediction'],
+                          ['Business Objective', 'Deploy Project', 'New Prediction', 'New Prediction using API'],
                           default_index=0)
 
 # menu = ['Business Objective', 'Overview & Recommend', 'New Prediction']
@@ -217,7 +218,7 @@ if choice == 'Deploy Project':
 
 if choice == 'New Prediction':
     lines = None
-    type = st.selectbox("Select the data you'd like to predict:", options=("Upload file *.csv","Upload file *.txt", "Input text"))
+    type = st.selectbox("Select the data you'd like to predict:", options=("Input text", "Upload file *.csv","Upload file *.txt", ))
     if type == "Upload file *.csv":
         st.write("Please upload file with this format")
         frame = pd.DataFrame({'comment': ['Input your comment here']})
@@ -287,3 +288,41 @@ if choice == 'New Prediction':
                 file_name='result.csv',
                 mime='text/csv;charset=UTF-8',
             )
+if choice == 'New Prediction using API':
+    st.header('Sentiment Analysis using MonkeyLearn API')
+    review = st.text_input(label='Input your feedback:')
+    if st.button(label='Submit'):
+        # Open the file in read mode
+        with open('api_key.txt', 'r') as file:
+            # Read the contents of the file
+            key = file.read().strip()
+
+        model_id = 'cl_pi3C7JiL'
+        api_key = key
+        url = f'https://api.monkeylearn.com/v3/classifiers/{model_id}/classify/'
+
+        data = {
+            'data': [
+                {'text': review}
+            ]
+        }
+
+        headers = {
+            'Authorization': f'Token {api_key}',
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.post(url, json=data, headers=headers)
+
+        sentiment_category = response.json()[0]['classifications'][0]['tag_name']
+        if sentiment_category == 'Positive':
+            st.info('Your comment is: **Positive**')
+            pos = Image.open('pictures/positive.jpg')
+            pos = pos.resize((400,400))
+            st.image(pos, width=250)
+        else:
+            st.error('Your comment is: **Negative**')
+            neg = Image.open('pictures/negative.png')
+            neg = neg.resize((400,400))
+            st.image(neg, width=250)
+    
