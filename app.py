@@ -192,17 +192,17 @@ if choice == 'Deploy Project':
 
     with col1:
         st.write("##### Logistic Regression")
-        st.image("pictures/cm_lr.png")
+        st.image("pictures/cls_report_lr.png")
         st.image("pictures/cfm_lr.png")
 
     with col2:
         st.write("##### Naive Bayes")
-        st.image("pictures/cm_nb.png")
+        st.image("pictures/cls_report_nb.png")
         st.image("pictures/cfm_nb.png")
 
     with col3:
         st.write("##### Random Forest")
-        st.image("pictures/cm_rf.png")
+        st.image("pictures/cls_report_rf.png")
         st.image("pictures/cfm_rf.png")
 
     st.write('#### Table comparing the results of the models')
