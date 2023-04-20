@@ -88,12 +88,12 @@ def process_special_word(text):
     new_text = ''
     text_lst = text.split()
     i= 0
-    if 'không' in text_lst:
+    if 'không' in text_lst or 'chẳng' in text_lst or 'chả' in text_lst or 'ko' in text_lst or 'hok' in text_lst:
         while i <= len(text_lst) - 1:
             word = text_lst[i]
             #print(word)
             #print(i)
-            if  word == 'không':
+            if  word in ['không', 'chẳng', 'chả', 'ko', 'hok']:
                 next_idx = i+1
                 if next_idx <= len(text_lst) -1:
                     word = word +'_'+ text_lst[next_idx]
